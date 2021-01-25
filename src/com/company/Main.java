@@ -128,25 +128,25 @@ public class Main {
             } else if (root.right==null && root.left!=null) {
                 root = root.left;
             } else if (root.right!=null && root.left!=null) {
-                BNode predecessor = root.left;
-                BNode parentPredecessor = root.left;
+                BNode successor = root.right;
+                BNode parentSuccessor = root.right;
                 try {
-                    if (predecessor.right!=null)
-                        predecessor = predecessor.right;
+                    if (successor.left!=null)
+                        successor = successor.left;
                     else throw new NullPointerException();
-                    while (true) {
-                        predecessor = predecessor.right;
-                        parentPredecessor = parentPredecessor.right;
+                    while (successor.left!=null) {
+                        successor = successor.left;
+                        parentSuccessor = parentSuccessor.left;
                     }
                 } catch (NullPointerException e) { }
-                if (predecessor!=parentPredecessor) {
-                    parentPredecessor.right = predecessor.left;
-                    predecessor.left = root.left;
-                    predecessor.right = root.right;
-                    root = predecessor;
+                if (successor!=parentSuccessor) {
+                    parentSuccessor.left = successor.right;
+                    successor.right = root.right;
+                    successor.left = root.left;
+                    root = successor;
                 } else {
-                    predecessor.right = root.right;
-                    root = predecessor;
+                    successor.left = root.left;
+                    root = successor;
                 }
             }
             return root;
